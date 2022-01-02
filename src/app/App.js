@@ -6,9 +6,8 @@ import Users from "./components/users";
 function App() {
     const [usersArr, setUsers] = useState();
     useEffect(() => {
-        console.log("render");
-    });
-    api.users.fetchAll().then((item) => console.log(item));
+        api.users.fetchAll().then((item) => setUsers(item));
+    }, []);
     const handleDelete = (userId) => {
         setUsers(usersArr.filter((user) => user._id !== userId));
     };
@@ -25,12 +24,14 @@ function App() {
     };
     return (
         <>
-            <Users
-                users={usersArr}
-                {...usersArr}
-                onDelete={handleDelete}
-                onChange={handleToggleBookmark}
-            />
+            {usersArr &&
+                <Users
+                    users={usersArr}
+                    {...usersArr}
+                    onDelete={handleDelete}
+                    onChange={handleToggleBookmark}
+                />
+            }
         </>
     );
 };

@@ -12,7 +12,6 @@ const Users = ({ users, ...rest }) => {
     const [selectedProf, setSelectedProf] = useState();
     const pageSize = 4;
     useEffect(() => {
-        api.users.fetchAll().then((item) => console.log(item));
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
     useEffect(() => {
@@ -24,9 +23,13 @@ const Users = ({ users, ...rest }) => {
     const handleProfessionsSelect = (item) => {
         setSelectedProf(item);
     };
+    const deepEqual = (obj1, obj2) => {
+        return JSON.stringify(obj1) === JSON.stringify(obj2);
+    };
     const filteredUsers = selectedProf
-        ? users.filter((user) => user.profession === selectedProf)
+        ? users.filter((user) => deepEqual(user.profession, selectedProf))
         : users;
+    console.log(filteredUsers);
     const count = 4;
     const userCrop = paginate(filteredUsers, currentPage, pageSize);
     const clearFilter = () => {
@@ -47,7 +50,7 @@ const Users = ({ users, ...rest }) => {
                 </div>
             )}
             <div className="d-flex flex-column">
-                {SearchStatus(count)}
+                {SearchStatus(filteredUsers.length)}
                 {count > 0 && (
                     <table className="table">
                         <thead>
@@ -65,7 +68,7 @@ const Users = ({ users, ...rest }) => {
                             {userCrop.map((user) => (
                                 <User
                                     key={user._id}
-                                    {...users}
+                                    {...user}
                                     {...rest}
                                     button={
                                         <button
