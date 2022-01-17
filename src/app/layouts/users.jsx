@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { paginate } from "../utils/paginates";
-import Pagination from "./pagination";
-import SearchStatus from "./searchStatus";
+import Pagination from "../components/pagination";
+import SearchStatus from "../components/searchStatus";
 import api from "../api";
-import GroupList from "./groupList";
-import UsersTable from "./usersTable";
+import GroupList from "../components/groupList";
+import UsersTable from "../components/usersTable";
 import _ from "lodash";
-import UserPage from "./userPage";
+import UserPage from "../components/userPage";
 const Users = ({ match }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
